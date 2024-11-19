@@ -1,0 +1,152 @@
+/* poppins-regular - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/fonts/poppins-v21-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  }
+  
+:root{
+    --color1: #c11c84;
+    --color2: #8fd9fb;
+    --color3: grey;
+
+    --font1: 'Poppins';
+    --font2: 'Quattrocento Sans';
+    --font3: 'Oswald';
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.container
+{
+    max-width: 1200px;
+    width: 100%;
+    margin:0 auto;
+}
+
+
+
+header .banner{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color1);
+    color: white;
+    height: 40px;
+    text-transform: uppercase;
+    border-radius: 0 0 10px 10px;
+    font-family: var(--font1);
+}
+
+header .search{
+    display: flex;
+    justify-content: space-between;
+    position: 'relative';
+}
+
+
+header .search .logo{
+    height: 50px;
+    margin-top: 25px;
+}
+
+header .search .bar{
+    height: 46px;
+    width: 50%;
+    border-radius: 23px;
+    margin-top:25px;
+    padding: 0 10px;
+    border: 0.5px solid var(--color3);
+    outline: none;
+}
+
+header .search .result{
+    display: none;
+    width: 200px;
+    height: 300px;
+    border-radius: 25px;
+    background-color: white;
+    border: 1px solid var(--color3);
+    overflow: auto;
+    position: absolute;
+    padding: 10px;
+    font-family: var(--font1);
+}
+
+header .search .options{
+    margin-top: 25px;
+    font-family: var(--font1);
+    color: grey
+    
+}
+
+header .search .options ul{
+    list-style-type: none;
+    display: flex;
+}
+
+header .search .options ul li{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    margin: 5px;
+}
+
+header .search .options ul li a{
+    color: grey;
+    text-decoration: none;
+}
+
+header nav{
+    margin-top: 45px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    
+}
+
+header nav ul{
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    width: 100%;
+}
+
+header nav ul li{
+    margin: 0 10px;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+    cursor: pointer;
+}
+
+
+
+header nav ul li a{
+    font-family: var(--font1);
+    text-decoration: none;
+    color: grey;
+}
+
+header nav .options{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color2);
+    height: 50px;
+    width: 100%;
+    border-radius: 10px;
+    flex-wrap: wrap;
+}
+
+header nav .options .content{
+    display: none;
+}
+
