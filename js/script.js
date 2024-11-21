@@ -1,11 +1,20 @@
 var app = {
 
+    data: [],
     resultWindow: null,
     searchBar : null,
     current_nav_selection: null,
 
     init: function()
     {
+        let that = this;
+
+        $.get("data/data.json", function( data ) 
+        {
+            that.data = data.data;
+        });
+
+
         this.resultWindow = $("header .search .result");
         this.searchBar    = $("header .search .bar");
         let position      = $("header .search .bar").offset();
@@ -20,22 +29,10 @@ var app = {
 
         if(that.current_nav_selection !== null)
         {
-            $(that.current_nav_selection).css("background-color","#ffffff");
-            $(that.current_nav_selection).find("a").css("color","grey");
+
         }
 
         that.current_nav_selection = elem;
-
-        $(elem).css("background-color","#8fd9fb");
-        $(elem).find("a").css("color","#ffffff");
-
-        let selectorId = $(elem).attr("data-id");
-
-        selectorId = selectorId.split('-')[1];
-
-        $("header nav .options .content").hide();
-
-        $("#content-" +  selectorId).fadeIn();
     },
 
     mouseleave: function(elem)
@@ -45,14 +42,32 @@ var app = {
 
     search: function(elem)
     {
-        let value = $(elem).val();
-        console.log(value);
-        let new_line = $("<p>" + value + "</p>");
-        $(this.resultWindow).append(new_line).fadeIn();
+        let that = this;
+        let n_results = 0;
 
-        if(value.length == 0)
+        $(this.resultWindow).empty().hide();
+
+        let searchValue = $(elem).val();
+
+        if(searchValue.length > 0)
         {
-            $(this.resultWindow).empty().fadeOut();
+            for(let i = 0; i < that.data.length; i++)
+            {
+                if(that.data[i].text.toLowerCase().includes(searchValue.toLowerCase()))
+                {
+                    n_results += 1;
+                    let new_line = $("<a href='#'>" + that.data[i].text + "</a><br>");
+                    $(this.resultWindow).append(new_line);
+                }
+
+                if (n_results > 20) { break; }
+            }
+        }
+    
+
+        if(n_results > 0)
+        {
+            $(this.resultWindow).fadeIn();
         }
     }
 }
@@ -72,8 +87,6 @@ $(document).ready(function()
     {
         app.mouseleave(this);
     });
-
-    $("header .search .bar")
 
     $( "header .search .bar").on("keyup",function() 
     {

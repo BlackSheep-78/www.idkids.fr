@@ -23,6 +23,18 @@
     box-sizing: border-box;
 }
 
+ul{
+    list-style-type: none;
+}
+
+a{
+    text-decoration: none;
+}
+
+body{
+    font-family: var(--font1);
+}
+
 .container
 {
     max-width: 1200px;
@@ -106,32 +118,40 @@ header .search .options ul li a{
 
 header nav{
     margin-top: 45px;
-    width: 100%;
+    width: 81%;
     display: flex;
     justify-content: center;
     flex-direction: column;
+    margin-bottom: 10px;
+    margin-left: 220px;
     
 }
 
 header nav ul{
     display: flex;
     justify-content: center;
-    list-style-type: none;
     width: 100%;
 }
 
 header nav ul li{
     margin: 0 10px;
     padding: 10px;
-    border-radius: 10px 10px 0 0;
+    border-radius: 10px 10px 10px 10px;
     cursor: pointer;
+}
+
+header nav ul li:hover{
+    background-color: #8fd9fb;
+}
+
+header nav ul li:hover a{
+    color: white;
 }
 
 
 
 header nav ul li a{
     font-family: var(--font1);
-    text-decoration: none;
     color: grey;
 }
 
@@ -148,5 +168,56 @@ header nav .options{
 
 header nav .options .content{
     display: none;
+}
+
+main.container{
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap;
+}
+
+main .filter{
+    width: 250px;
+    margin-right: 20px;
+   
+}
+
+main .filter ul{
+    width: 100%;
+    background-color: var(--color2);
+    border-radius: 10px;
+    padding:5px 10px;
+    
+}
+
+main .filter ul li{
+
+    padding:10px 0; 
+}
+
+main .filter ul li a{
+
+    color: grey; 
+}
+
+main .filter ul li .subcat{
+
+    margin-top: 20px;
+    border: 1px solid white;
+}
+
+main .filter ul hr{
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid white;
+    padding: 0;
+}
+
+main .showroom{
+    width: 100%;
+    min-height: 600px;
+    border: 1px solid grey;
+    border-radius: 10px;
 }
 
