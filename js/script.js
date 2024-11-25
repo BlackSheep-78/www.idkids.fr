@@ -4,6 +4,8 @@ var app = {
     resultWindow: null,
     searchBar : null,
     current_nav_selection: null,
+    filter_menu: {},
+    list_checked_categories: {},
 
     init: function()
     {
@@ -69,6 +71,72 @@ var app = {
         {
             $(this.resultWindow).fadeIn();
         }
+    },
+
+    menu: function(event)
+    {
+        let  that = this;
+
+        event.preventDefault();
+
+        let type  = $(event.target).data('type');
+        let index = $(event.target).data('index');
+
+        console.log(type,index);
+
+        switch(type)
+        {
+            case 'category-top':
+
+            break;
+
+            case 'filter-option':
+
+                let hr = $(event.target).next('hr');
+                let su = $(event.target).next().next('div.subcat');
+        
+                if(!that.filter_menu[index] || that.filter_menu[index]==0)
+                {
+                    that.filter_menu[index] = 1;
+
+                    $(hr).hide();
+                    $(su).show();
+                }
+                else
+                {
+                    that.filter_menu[index] = 0;
+        
+                    $(hr).show();
+                    $(su).hide();
+                }
+
+            break;
+
+            case 'category-left':
+
+                if( !that.list_checked_categories[index] || that.list_checked_categories[index]==0 )
+                {
+                    let check = $(event.target).prev('i');
+                    $(check).addClass('fa-solid');
+                    $(check).addClass('fa-check');
+                    that.list_checked_categories[index] = 1;
+                }
+                else
+                {
+                    let check = $(event.target).prev('i');
+                    $(check).removeClass('fa-solid fa-check');
+                    that.list_checked_categories[index] = 0;
+                }
+                
+            break;
+        }
+
+
+
+     
+
+
+
     }
 }
 
@@ -91,5 +159,10 @@ $(document).ready(function()
     $( "header .search .bar").on("keyup",function() 
     {
         app.search(this);
+    });
+
+    $("a").on("click",function(event)
+    {
+        app.menu(event);
     });
 });

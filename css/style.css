@@ -31,8 +31,10 @@ a{
     text-decoration: none;
 }
 
-body{
+body
+{
     font-family: var(--font1);
+    margin: 0 auto;
 }
 
 .container
@@ -179,13 +181,15 @@ main.container{
 main .filter{
     width: 250px;
     margin-right: 20px;
+    background-color: var(--color2);
+    border-radius: 10px;
    
 }
 
 main .filter ul{
     width: 100%;
-    background-color: var(--color2);
-    border-radius: 10px;
+   
+    
     padding:5px 10px;
     
 }
@@ -200,10 +204,29 @@ main .filter ul li a{
     color: grey; 
 }
 
+main .filter ul li hr{
+    margin-top:20px;
+}
+
 main .filter ul li .subcat{
 
-    margin-top: 20px;
     border: 1px solid white;
+    background-color: white;
+    height: 300px;
+    overflow: scroll;
+    display: none;
+}
+
+main .filter ul li .subcat li{
+    font-size: 0.9rem;
+    margin: 0px;
+    padding: 0px;
+}
+
+main .filter ul li .subcat li i{
+    color:green;
+    font-weight: bold;
+    width: 14px;
 }
 
 main .filter ul hr{

@@ -1,14 +1,53 @@
 {
     "data":
         [
-            {"text":"6 masques super héros à créer Oxybul"},
-            {"text":"Set de 3 accessoires Faon Oxybul"},
-            {"text":"Baguette magique arc-en-ciel Oxybul"},
-            {"text":"Casque de pompier avec visière sonore et lumineux Oxybul"},
-            {"text":"Sabre de pirate Oxybul"},
-            {"text":"Déguisement de fée pailletée 3-8 ans Oxybul"},
-            {"text":"Lance à incendie pompier Oxybul"},
-            {"text":"Epée sonore Excalibur Oxybul"}
+            {
+                "id":1,
+                "text":"6 masques super héros à créer Oxybul",
+                "cat":[1,2,3],
+                "prix":2000
+            },
+            {
+                "id":2,"text":"Set de 3 accessoires Faon Oxybul",
+                "cat":[1,2,3],
+                "prix":2000
+            },
+            {
+                "id":3,
+                "text":"Baguette magique arc-en-ciel Oxybul",
+                "cat":[1,2,3],
+                "prix":2000
+            },
+            {
+                "id":4,
+                "text":"Casque de pompier avec visière sonore et lumineux Oxybul",
+                "cat":[1,2,3],
+                "prix":2000
+            },
+            {
+                "id":5,
+                "text":"Sabre de pirate Oxybul",
+                "cat":[1,2,3],
+                "prix":2000
+            },
+            {   
+                "id":6,
+                "text":"Déguisement de fée pailletée 3-8 ans Oxybul",
+                "cat":[1,2,3],
+                "prix":2000
+            },
+            {
+                "id":7,
+                "text":"Lance à incendie pompier Oxybul",
+                "cat":[1,2,3],
+                "prix":2000
+            },
+            {
+                "id":8,
+                "text":"Epée sonore Excalibur Oxybul",
+                "cat":[1,2,3],
+                "prix":2000
+            }
         ],
 
     "filters":
