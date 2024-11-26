@@ -1,11 +1,19 @@
 var app = {
 
-    data: [],
+    data: null,
     resultWindow: null,
     searchBar : null,
     current_nav_selection: null,
-    filter_menu: {},
     list_checked_categories: {},
+    menu: 
+    {
+        filter:
+        {
+            index : {},
+            active: {elem:null,index:0},
+            is_busy : false
+        }
+    },
 
     init: function()
     {
@@ -13,7 +21,7 @@ var app = {
 
         $.get("data/data.json", function( data ) 
         {
-            that.data = data.data;
+            that.data = data;
         });
 
 
@@ -73,9 +81,9 @@ var app = {
         }
     },
 
-    menu: function(event)
+    click: function(event)
     {
-        let  that = this;
+        var that = this;
 
         event.preventDefault();
 
@@ -92,22 +100,76 @@ var app = {
 
             case 'filter-option':
 
-                let hr = $(event.target).next('hr');
-                let su = $(event.target).next().next('div.subcat');
-        
-                if(!that.filter_menu[index] || that.filter_menu[index]==0)
-                {
-                    that.filter_menu[index] = 1;
+                if(that.menu.filter.is_busy) { return; }
 
-                    $(hr).hide();
-                    $(su).show();
-                }
-                else
+                if(!that.menu.filter.index[index])
                 {
-                    that.filter_menu[index] = 0;
-        
-                    $(hr).show();
-                    $(su).hide();
+
+                    that.menu.filter.index[index] = {'state':0,'hr':null,'subcat':null,'i':index};
+                    that.menu.filter.index[index].hr = $(event.target).next('hr');
+                    that.menu.filter.index[index].subcat = $(event.target).next().next('div.subcat');
+                }
+
+                if(that.menu.filter.index[index].state == 0 && that.menu.filter.active.index == 0)
+                {
+                    $(that.menu.filter.index[index].hr).hide();
+                    $(that.menu.filter.index[index].subcat).css('margin-top','20px');
+                    $(that.menu.filter.index[index].subcat).css('visibility','visible');
+
+                    that.menu.filter.is_busy = true;
+                    that.transform(that.menu.filter.index[index].subcat,{'property':'height','value':300,'speed':50},function()
+                    {
+                        that.menu.filter.index[index].state = 1;
+                        that.menu.filter.active.index = index;
+                        that.menu.filter.active.elem  = that.menu.filter.index[index].subcat;
+                        that.menu.filter.is_busy = false;
+                    });
+                }
+                else if(that.menu.filter.index[index].state == 1)
+                {
+                    that.menu.filter.is_busy = true;
+                    that.transform(that.menu.filter.index[index].subcat,{'property':'height','value':0,'speed':50},function()
+                    {
+                        $(that.menu.filter.index[index].hr).show();
+                        $(that.menu.filter.index[index].subcat).css('margin-top','0px');
+                        $(that.menu.filter.index[index].subcat).css('visibility','hidden');
+
+                        that.menu.filter.index[index] = 0;
+                        that.menu.filter.active.index = 0;
+                        that.menu.filter.active.elem  = null;
+                        that.menu.filter.is_busy = false;
+                    });
+                }
+                else if(that.menu.filter.index[index].state == 0 && that.menu.filter.active.index > 0)
+                {
+                    that.menu.filter.is_busy = true;
+
+                    let _index = that.menu.filter.active.index;
+                    let _elem = that.menu.filter.active.elem;
+
+                    that.transform(_elem,{'property':'height','value':0,'speed':50},function()
+                    {
+                        $(that.menu.filter.index[_index].hr).show();
+                        $(that.menu.filter.index[_index].subcat).css('margin-top','0px');
+                        $(that.menu.filter.index[_index].subcat).css('visibility','hidden');
+
+                        that.menu.filter.index[that.menu.filter.active.index] = 0;
+                        that.menu.filter.active.index = 70;
+                        that.menu.filter.active.elem  = null;
+
+                        $(that.menu.filter.index[index].hr).hide();
+                        $(that.menu.filter.index[index].subcat).css('margin-top','20px');
+                        $(that.menu.filter.index[index].subcat).css('visibility','visible');
+                        
+                        that.transform(that.menu.filter.index[index].subcat,{'property':'height','value':300,'speed':50},function()
+                        {
+                            that.menu.filter.index[index].state = 1;
+                            that.menu.filter.active.index = index;
+                            that.menu.filter.active.elem  = that.menu.filter.index[index].subcat;
+
+                            that.menu.filter.is_busy = false;
+                        });
+                    });
                 }
 
             break;
@@ -127,19 +189,106 @@ var app = {
                     $(check).removeClass('fa-solid fa-check');
                     that.list_checked_categories[index] = 0;
                 }
-                
+
             break;
         }
 
+    },
+
+    transform: function(elem,data,callback)
+    {
+        let that = this;
+
+        switch(data['property'])
+        {
+            case 'height':
+
+                let currentHeight = $(elem).height();
+                let targetHeight = data['value'];
+
+                if(currentHeight == targetHeight)
+                {
+                    if(callback)
+                    { 
+                        callback(); 
+                        
+                    }
+                }
+
+                if(currentHeight < targetHeight)
+                {
+                    $(elem).height(Math.ceil(currentHeight + ((targetHeight - currentHeight)/2)));
+
+                    window.setTimeout(function(){
+                        that.transform(elem,data,callback);
+                    },data['speed']);
+
+                    return;
+                }
+
+                if(currentHeight > targetHeight)
+                {
+                    $(elem).height(Math.floor(currentHeight - ((currentHeight - targetHeight)/2)));
+
+                    window.setTimeout(function()
+                    {
+                        that.transform(elem,data,callback);
+                    },data['speed']);
+
+                    return;
+                }
+
+               
+
+            break;
+        }
+    },
+
+    display: function()
+    {
+        let that = this;
+        let executed = false;
+
+        let dataset = that.data.articles;
+        let elem = $("article.card")[0];
+
+        let showroom = $("section.showroom");
+        $(showroom).fadeOut(function()
+        {
+            $(showroom).empty();
+
+            for(var i = 0; i < 8; i++)
+            {
+                let row = dataset[i];
+
+                let sample = $(elem).clone(true);
+
+                if(row['images'])
+                {
+                    $('img',sample).attr('src','images/shop/' + row.images[0] + '.png');
+
+                    
+                }
+            
+                $('.brand',sample).html('marca 1');
+                $('.desc',sample).html(row.text);
+                $('.age',sample).html('age 1');
+                $('.price',sample).html('price 1');
+                $('.rating',sample).html('rating 1');
+
+                $(showroom).append(sample);
+            }
+
+            $(showroom).fadeIn();
+        });
+       
 
 
-     
 
 
-
+ 
     }
 }
-
 
 $(document).ready(function()
 {
@@ -163,6 +312,6 @@ $(document).ready(function()
 
     $("a").on("click",function(event)
     {
-        app.menu(event);
+        app.click(event);
     });
 });

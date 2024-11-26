@@ -1,5 +1,5 @@
 {
-    "data":
+    "articles":
         [
             {
                 "id":1,
@@ -34,19 +34,29 @@
                 "id":6,
                 "text":"Déguisement de fée pailletée 3-8 ans Oxybul",
                 "cat":[1,2,3],
-                "prix":2000
+                "images":[7,8],
+                "prix":2299
             },
             {
                 "id":7,
                 "text":"Lance à incendie pompier Oxybul",
                 "cat":[1,2,3],
+                "images":[5,6],
                 "prix":2000
             },
             {
                 "id":8,
                 "text":"Epée sonore Excalibur Oxybul",
                 "cat":[1,2,3],
+                "images":[3,4],
                 "prix":2000
+            },
+            {
+                "id":9,
+                "text":"Draisienne Charlie Chillafish",
+                "cat":[1,2,3],
+                "images":[1,2],
+                "prix":5499
             }
         ],
 
@@ -58,5 +68,17 @@
             "vendu et expédié par",
             "prix",
             "coulour"
-        ]
+        ],
+
+    "brands":
+        {
+            "1": {"id":1,"name":"marca 1"},
+            "2": {"id":2,"name":"marca 2"},
+            "3": {"id":3,"name":"marca 3"},
+            "4": {"id":4,"name":"marca 4"},
+            "5": {"id":5,"name":"marca 5"},
+            "6": {"id":6,"name":"marca 6"}
+        }
+            
+   
 }
