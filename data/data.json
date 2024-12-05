@@ -1,33 +1,65 @@
 {
+    "filters":
+        [
+            "catégories",
+            "age",
+            "marque",
+            "vendu et expédié par",
+            "prix",
+            "coulour"
+        ],
+
+    "brands":
+        {
+            "1": {"id":1,"name":"Oxybul"},
+            "2": {"id":2,"name":"marca 2"},
+            "3": {"id":3,"name":"marca 3"},
+            "4": {"id":4,"name":"marca 4"},
+            "5": {"id":5,"name":"marca 5"},
+            "6": {"id":6,"name":"marca 6"}
+        },
+
     "articles":
         [
             {
                 "id":1,
-                "text":"6 masques super héros à créer Oxybul",
                 "cat":[1,2,3],
-                "prix":2000
+                "images":[9,10],
+                "brand":1,
+                "text":"6 masques super héros à créer Oxybul",
+                "age": 10,
+                "price": 2000,
+                "rating":5
             },
             {
-                "id":2,"text":"Set de 3 accessoires Faon Oxybul",
+                "id":2,
                 "cat":[1,2,3],
-                "prix":2000
+                "images":[11,12],
+                "brand":2,
+                "text":"Set de 3 accessoires Faon Oxybul",
+                "age": 10,
+                "price": 3000,
+                "rating":5
             },
             {
                 "id":3,
                 "text":"Baguette magique arc-en-ciel Oxybul",
                 "cat":[1,2,3],
+                "images":[13,14],
                 "prix":2000
             },
             {
                 "id":4,
                 "text":"Casque de pompier avec visière sonore et lumineux Oxybul",
                 "cat":[1,2,3],
+                "images":[15,16],
                 "prix":2000
             },
             {
                 "id":5,
                 "text":"Sabre de pirate Oxybul",
                 "cat":[1,2,3],
+                "images":[17,18],
                 "prix":2000
             },
             {   
@@ -58,27 +90,6 @@
                 "images":[1,2],
                 "prix":5499
             }
-        ],
-
-    "filters":
-        [
-            "catégories",
-            "age",
-            "marque",
-            "vendu et expédié par",
-            "prix",
-            "coulour"
-        ],
-
-    "brands":
-        {
-            "1": {"id":1,"name":"marca 1"},
-            "2": {"id":2,"name":"marca 2"},
-            "3": {"id":3,"name":"marca 3"},
-            "4": {"id":4,"name":"marca 4"},
-            "5": {"id":5,"name":"marca 5"},
-            "6": {"id":6,"name":"marca 6"}
-        }
-            
+        ]          
    
 }

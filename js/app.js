@@ -15,13 +15,14 @@ var app = {
         }
     },
 
-    init: function()
+    init: function(js = false)
     {
         let that = this;
 
         $.get("data/data.json", function( data ) 
         {
             that.data = data;
+            if(js) { that.display(); }
         });
 
 
@@ -52,8 +53,9 @@ var app = {
 
     search: function(elem)
     {
-        let that = this;
+        let that      = this;
         let n_results = 0;
+        let articles  = that.data.articles;
 
         $(this.resultWindow).empty().hide();
 
@@ -61,12 +63,12 @@ var app = {
 
         if(searchValue.length > 0)
         {
-            for(let i = 0; i < that.data.length; i++)
+            for(let i = 0; i < articles.length; i++)
             {
-                if(that.data[i].text.toLowerCase().includes(searchValue.toLowerCase()))
+                if(articles[i].text.toLowerCase().includes(searchValue.toLowerCase()))
                 {
                     n_results += 1;
-                    let new_line = $("<a href='#'>" + that.data[i].text + "</a><br>");
+                    let new_line = $("<a href='#'>" + articles[i].text + "</a><br>");
                     $(this.resultWindow).append(new_line);
                 }
 
@@ -259,22 +261,27 @@ var app = {
 
             for(var i = 0; i < 8; i++)
             {
-                let row = dataset[i];
-
+                let row    = dataset[i];
                 let sample = $(elem).clone(true);
 
-                if(row['images'])
-                {
-                    $('img',sample).attr('src','images/shop/' + row.images[0] + '.png');
+                let brand  = "<i>&#8226; not defined &#8226;</i>";
+                let desc   = "<i>&#8226; not defined &#8226;</i>";
+                let age    = "<i>&#8226; not defined &#8226;</i>";
+                let price  = "<i>&#8226; not defined &#8226;</i>";
+                let rating = "<i>&#8226; not defined &#8226;</i>";
 
-                    
-                }
-            
-                $('.brand',sample).html('marca 1');
-                $('.desc',sample).html(row.text);
-                $('.age',sample).html('age 1');
-                $('.price',sample).html('price 1');
-                $('.rating',sample).html('rating 1');
+                if(row['images']) { $('img',sample).attr('src','images/shop/' + row.images[0] + '.png');   }
+                if(row['brand'])  { brand = that.data.brands[row.brand].name; }
+                if(row['text'])   { desc = row['text']; }
+                if(row['age'])    { age = row['age']; }
+                if(row['price'])  { price = row['price']; }
+                if(row['rating']) { rating = row['rating']; }
+
+                $('.brand',sample).html(brand);
+                $('.desc',sample).html(desc);
+                $('.age',sample).html(age);
+                $('.price',sample).html(price);
+                $('.rating',sample).html(rating);
 
                 $(showroom).append(sample);
             }
@@ -292,7 +299,7 @@ var app = {
 
 $(document).ready(function()
 {
-    app.init();
+    app.init(true);
 
     $("nav ul li").mouseenter(function()
     {

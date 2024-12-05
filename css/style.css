@@ -274,3 +274,11 @@ main .showroom .card .info{
     border-radius: 0 0 5px 5px;
 }
 
+main .showroom .card .info p{
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    flex-wrap: nowrap;
+    text-wrap: nowrap;
+}
+
