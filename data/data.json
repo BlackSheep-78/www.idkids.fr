@@ -27,7 +27,7 @@
                 "images":[9,10],
                 "brand":1,
                 "text":"6 masques super héros à créer Oxybul",
-                "age": 10,
+                "age": [0,2],
                 "price": 2000,
                 "rating":5
             },
@@ -89,6 +89,16 @@
                 "cat":[1,2,3],
                 "images":[1,2],
                 "prix":5499
+            },
+            {
+                "id":10,
+                "cat":[1,2,3],
+                "images":[11,12],
+                "brand":2,
+                "text":"Set de 3 accessoires Faon Oxybul 2",
+                "age": 10,
+                "price": 3000,
+                "rating":5
             }
         ]          
    

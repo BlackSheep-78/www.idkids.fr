@@ -5,6 +5,7 @@ var app = {
     searchBar : null,
     current_nav_selection: null,
     list_checked_categories: {},
+    dataset: [],
     menu: 
     {
         filter:
@@ -51,9 +52,18 @@ var app = {
 
     },
 
-    search: function(elem)
+    search: function(elem,event)
     {
-        let that      = this;
+        let that     = this;
+
+        if(event.which == 13)
+        {
+            $(this.resultWindow).empty().hide();
+            
+            that.display();
+            return;
+        }
+
         let n_results = 0;
         let articles  = that.data.articles;
 
@@ -63,10 +73,13 @@ var app = {
 
         if(searchValue.length > 0)
         {
+            that.dataset = [];
+
             for(let i = 0; i < articles.length; i++)
             {
                 if(articles[i].text.toLowerCase().includes(searchValue.toLowerCase()))
                 {
+                    that.dataset.push(articles[i]);
                     n_results += 1;
                     let new_line = $("<a href='#'>" + articles[i].text + "</a><br>");
                     $(this.resultWindow).append(new_line);
@@ -248,10 +261,12 @@ var app = {
 
     display: function()
     {
-        let that = this;
+        let that     = this;
         let executed = false;
+        let dataset  = that.data.articles;
 
-        let dataset = that.data.articles;
+        if(that.dataset.length > 0) { dataset = that.dataset; }
+
         let elem = $("article.card")[0];
 
         let showroom = $("section.showroom");
@@ -259,31 +274,38 @@ var app = {
         {
             $(showroom).empty();
 
+            console.log(dataset);
+
             for(var i = 0; i < 8; i++)
             {
-                let row    = dataset[i];
-                let sample = $(elem).clone(true);
+                if(dataset[i])
+                {
+                    let row    = dataset[i];
+                    let sample = $(elem).clone(true);
 
-                let brand  = "<i>&#8226; not defined &#8226;</i>";
-                let desc   = "<i>&#8226; not defined &#8226;</i>";
-                let age    = "<i>&#8226; not defined &#8226;</i>";
-                let price  = "<i>&#8226; not defined &#8226;</i>";
-                let rating = "<i>&#8226; not defined &#8226;</i>";
+                    let images = ["images/shop/0.png"];
+                    let brand  = "<i>&#8226; not defined &#8226;</i>";
+                    let desc   = "<i>&#8226; not defined &#8226;</i>";
+                    let age    = "<i>&#8226; not defined &#8226;</i>";
+                    let price  = "<i>&#8226; not defined &#8226;</i>";
+                    let rating = "<i>&#8226; not defined &#8226;</i>";
 
-                if(row['images']) { $('img',sample).attr('src','images/shop/' + row.images[0] + '.png');   }
-                if(row['brand'])  { brand = that.data.brands[row.brand].name; }
-                if(row['text'])   { desc = row['text']; }
-                if(row['age'])    { age = row['age']; }
-                if(row['price'])  { price = row['price']; }
-                if(row['rating']) { rating = row['rating']; }
+                    if(row['images']) { $('img',sample).attr('src','images/shop/' + row.images[0] + '.png');   }
 
-                $('.brand',sample).html(brand);
-                $('.desc',sample).html(desc);
-                $('.age',sample).html(age);
-                $('.price',sample).html(price);
-                $('.rating',sample).html(rating);
+                    if(row['brand'])  { brand  = that.data.brands[row.brand].name; }
+                    if(row['text'])   { desc   = row['text']; }
+                    if(row['age'])    { age    = row['age']; }
+                    if(row['price'])  { price  = row['price']; }
+                    if(row['rating']) { rating = row['rating']; }
 
-                $(showroom).append(sample);
+                    $('.brand',sample).html(brand);
+                    $('.desc',sample).html(desc);
+                    $('.age',sample).html(age);
+                    $('.price',sample).html(price);
+                    $('.rating',sample).html(rating);
+
+                    $(showroom).append(sample);
+                }
             }
 
             $(showroom).fadeIn();
@@ -312,13 +334,17 @@ $(document).ready(function()
         app.mouseleave(this);
     });
 
-    $( "header .search .bar").on("keyup",function() 
+    $( "header .search .bar").on("keyup",function(e) 
     {
-        app.search(this);
+        
+
+        app.search(this,e);
     });
 
     $("a").on("click",function(event)
     {
+        
+
         app.click(event);
     });
 });
