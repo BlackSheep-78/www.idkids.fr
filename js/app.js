@@ -127,6 +127,8 @@ var app = {
 
                 if(that.menu.filter.index[index].state == 0 && that.menu.filter.active.index == 0)
                 {
+                    console.log("#slider 01");
+
                     $(that.menu.filter.index[index].hr).hide();
                     $(that.menu.filter.index[index].subcat).css('margin-top','20px');
                     $(that.menu.filter.index[index].subcat).css('visibility','visible');
@@ -134,6 +136,8 @@ var app = {
                     that.menu.filter.is_busy = true;
                     that.transform(that.menu.filter.index[index].subcat,{'property':'height','value':300,'speed':50},function()
                     {
+                        console.log("#slider 02");
+
                         that.menu.filter.index[index].state = 1;
                         that.menu.filter.active.index = index;
                         that.menu.filter.active.elem  = that.menu.filter.index[index].subcat;
@@ -221,8 +225,12 @@ var app = {
                 let currentHeight = $(elem).height();
                 let targetHeight = data['value'];
 
+                console.group(currentHeight,targetHeight);
+
                 if(currentHeight == targetHeight)
                 {
+                    console.log("#slider 03");
+
                     if(callback)
                     { 
                         callback(); 
@@ -232,7 +240,7 @@ var app = {
 
                 if(currentHeight < targetHeight)
                 {
-                    $(elem).height(Math.ceil(currentHeight + ((targetHeight - currentHeight)/2)));
+                    $(elem).height(Math.ceil(currentHeight + Math.ceil((targetHeight - currentHeight)/2)));
 
                     window.setTimeout(function(){
                         that.transform(elem,data,callback);
@@ -274,8 +282,6 @@ var app = {
         {
             $(showroom).empty();
 
-            console.log(dataset);
-
             for(var i = 0; i < 8; i++)
             {
                 if(dataset[i])
@@ -294,9 +300,40 @@ var app = {
 
                     if(row['brand'])  { brand  = that.data.brands[row.brand].name; }
                     if(row['text'])   { desc   = row['text']; }
-                    if(row['age'])    { age    = row['age']; }
-                    if(row['price'])  { price  = row['price']; }
-                    if(row['rating']) { rating = row['rating']; }
+
+                    if(row['age'])    
+                    { 
+                        if(row['age'].length == 1)
+                        {
+                            age = "Dès " + row['age'][0] + " ans";
+                        }
+                        else if(row['age'].length == 2)
+                            {
+                                age = "De " + row['age'][0] + " ans à " + row['age'][1] + " ans";
+                            }
+                        
+                    }
+
+                    if(row['price'])  
+                    { 
+                        let arr = (row['price'] + '').split('');
+                        let secondToLastIndex = arr.length - 2;
+                        arr.splice(secondToLastIndex, 0, ',');
+
+                        price  = arr.join('') + " €"; 
+                    }
+
+                    if(row['rating']) 
+                    { 
+                        rating = "";
+
+                        console.log(row['rating']);
+
+                        for(let i = 0; i < row['rating']; i++)
+                        {
+                            rating += "<i class='fa-solid fa-star'></i> ";
+                        } 
+                    }
 
                     $('.brand',sample).html(brand);
                     $('.desc',sample).html(desc);

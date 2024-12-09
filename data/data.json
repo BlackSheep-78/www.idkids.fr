@@ -37,58 +37,79 @@
                 "images":[11,12],
                 "brand":2,
                 "text":"Set de 3 accessoires Faon Oxybul",
-                "age": 10,
+                "age": [10],
                 "price": 3000,
                 "rating":5
             },
             {
                 "id":3,
-                "text":"Baguette magique arc-en-ciel Oxybul",
                 "cat":[1,2,3],
                 "images":[13,14],
-                "prix":2000
+                "brand":2,
+                "text":"Baguette magique arc-en-ciel Oxybul",
+                "age": [5,10],
+                "price": 3000,
+                "rating":5
             },
             {
                 "id":4,
-                "text":"Casque de pompier avec visière sonore et lumineux Oxybul",
                 "cat":[1,2,3],
                 "images":[15,16],
-                "prix":2000
+                "brand":2,
+                "text":"Casque de pompier avec visière sonore et lumineux Oxybul",
+                "age": [5],
+                "price": 3000,
+                "rating":5
             },
             {
                 "id":5,
-                "text":"Sabre de pirate Oxybul",
                 "cat":[1,2,3],
                 "images":[17,18],
-                "prix":2000
+                "brand":3,
+                "text":"Sabre de pirate Oxybul",
+                "age": [3,4],
+                "price": 3000,
+                "rating":5
             },
             {   
                 "id":6,
-                "text":"Déguisement de fée pailletée 3-8 ans Oxybul",
                 "cat":[1,2,3],
                 "images":[7,8],
-                "prix":2299
+                "brand":3,
+                "text":"Déguisement de fée pailletée 3-8 ans Oxybul",
+                "age": [0,2],
+                "price": 3000,
+                "rating":5
             },
             {
                 "id":7,
-                "text":"Lance à incendie pompier Oxybul",
                 "cat":[1,2,3],
                 "images":[5,6],
-                "prix":2000
+                "brand":3,
+                "text":"Lance à incendie pompier Oxybul",
+                "age": [9],
+                "price": 3000,
+                "rating":5
             },
             {
                 "id":8,
-                "text":"Epée sonore Excalibur Oxybul",
                 "cat":[1,2,3],
                 "images":[3,4],
-                "prix":2000
+                "brand":3,
+                "text":"Epée sonore Excalibur Oxybul",
+                "age": [0,2],
+                "price": 3000,
+                "rating":5
             },
             {
                 "id":9,
-                "text":"Draisienne Charlie Chillafish",
                 "cat":[1,2,3],
                 "images":[1,2],
-                "prix":5499
+                "brand":3,
+                "text":"Draisienne Charlie Chillafish",
+                "age": [7],
+                "price": 3000,
+                "rating":5
             },
             {
                 "id":10,
@@ -96,7 +117,7 @@
                 "images":[11,12],
                 "brand":2,
                 "text":"Set de 3 accessoires Faon Oxybul 2",
-                "age": 10,
+                "age": [2,4],
                 "price": 3000,
                 "rating":5
             }

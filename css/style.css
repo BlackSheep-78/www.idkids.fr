@@ -269,10 +269,26 @@ main .showroom .card img{
 
 main .showroom .card .info{
     width: 100%;
-    
     height: 150px;
     border-radius: 0 0 5px 5px;
 }
+
+main .showroom .card .info .brand{
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+main .showroom .card .info .rating{
+
+    color:  #D18C3C;
+    text-shadow: 2px 2px 4px #888;
+
+
+
+}
+
+
+
 
 main .showroom .card .info p{
     width: 100%;
