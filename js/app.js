@@ -18,12 +18,12 @@ var app = {
 
     init: function(js = false)
     {
-        let that = this;
+        let ap = this;
 
         $.get("data/data.json", function( data ) 
         {
-            that.data = data;
-            if(js) { that.display(); }
+            ap.data = data;
+            if(js) { ap.display(); }
         });
 
 
@@ -37,14 +37,14 @@ var app = {
 
     mouseenter : function(elem)
     {
-        let that = this;
+        let ap = this;
 
-        if(that.current_nav_selection !== null)
+        if(ap.current_nav_selection !== null)
         {
 
         }
 
-        that.current_nav_selection = elem;
+        ap.current_nav_selection = elem;
     },
 
     mouseleave: function(elem)
@@ -54,18 +54,18 @@ var app = {
 
     search: function(elem,event)
     {
-        let that     = this;
+        let ap     = this;
 
         if(event.which == 13)
         {
             $(this.resultWindow).empty().hide();
             
-            that.display();
+            ap.display();
             return;
         }
 
         let n_results = 0;
-        let articles  = that.data.articles;
+        let articles  = ap.data.articles;
 
         $(this.resultWindow).empty().hide();
 
@@ -73,13 +73,13 @@ var app = {
 
         if(searchValue.length > 0)
         {
-            that.dataset = [];
+            ap.dataset = [];
 
             for(let i = 0; i < articles.length; i++)
             {
                 if(articles[i].text.toLowerCase().includes(searchValue.toLowerCase()))
                 {
-                    that.dataset.push(articles[i]);
+                    ap.dataset.push(articles[i]);
                     n_results += 1;
                     let new_line = $("<a href='#'>" + articles[i].text + "</a><br>");
                     $(this.resultWindow).append(new_line);
@@ -98,95 +98,110 @@ var app = {
 
     click: function(event)
     {
-        var that = this;
+        var ap = this;
 
         event.preventDefault();
 
-        let type  = $(event.target).data('type');
-        let index = $(event.target).data('index');
+        console.log("click");
+
+        let target = event.target;
+
+        let type  = $(target).data('type');
+        let index = $(target).data('index');
+
+        if(typeof type === 'undefined')
+        {
+            target = $(event.target).closest('[data-type]');
+            type   = $(target).data('type');
+            index  = $(target).data('index');
+        }
 
         console.log(type,index);
 
         switch(type)
         {
+            case 'menu-top':
+                ap.modal('open',type,index);
+            break;
+
             case 'category-top':
 
             break;
 
             case 'filter-option':
 
-                if(that.menu.filter.is_busy) { return; }
+                if(ap.menu.filter.is_busy) { return; }
 
-                if(!that.menu.filter.index[index])
+                if(!ap.menu.filter.index[index])
                 {
 
-                    that.menu.filter.index[index] = {'state':0,'hr':null,'subcat':null,'i':index};
-                    that.menu.filter.index[index].hr = $(event.target).next('hr');
-                    that.menu.filter.index[index].subcat = $(event.target).next().next('div.subcat');
+                    ap.menu.filter.index[index] = {'state':0,'hr':null,'subcat':null,'i':index};
+                    ap.menu.filter.index[index].hr = $(event.target).next('hr');
+                    ap.menu.filter.index[index].subcat = $(event.target).next().next('div.subcat');
                 }
 
-                if(that.menu.filter.index[index].state == 0 && that.menu.filter.active.index == 0)
+                if(ap.menu.filter.index[index].state == 0 && ap.menu.filter.active.index == 0)
                 {
                     console.log("#slider 01");
 
-                    $(that.menu.filter.index[index].hr).hide();
-                    $(that.menu.filter.index[index].subcat).css('margin-top','20px');
-                    $(that.menu.filter.index[index].subcat).css('visibility','visible');
+                    $(ap.menu.filter.index[index].hr).hide();
+                    $(ap.menu.filter.index[index].subcat).css('margin-top','20px');
+                    $(ap.menu.filter.index[index].subcat).css('visibility','visible');
 
-                    that.menu.filter.is_busy = true;
-                    that.transform(that.menu.filter.index[index].subcat,{'property':'height','value':300,'speed':50},function()
+                    ap.menu.filter.is_busy = true;
+                    ap.transform(ap.menu.filter.index[index].subcat,{'property':'height','currentHeight':0,'targetHeight':300,'speed':50},function()
                     {
                         console.log("#slider 02");
 
-                        that.menu.filter.index[index].state = 1;
-                        that.menu.filter.active.index = index;
-                        that.menu.filter.active.elem  = that.menu.filter.index[index].subcat;
-                        that.menu.filter.is_busy = false;
+                        ap.menu.filter.index[index].state = 1;
+                        ap.menu.filter.active.index = index;
+                        ap.menu.filter.active.elem  = ap.menu.filter.index[index].subcat;
+                        ap.menu.filter.is_busy = false;
                     });
                 }
-                else if(that.menu.filter.index[index].state == 1)
+                else if(ap.menu.filter.index[index].state == 1)
                 {
-                    that.menu.filter.is_busy = true;
-                    that.transform(that.menu.filter.index[index].subcat,{'property':'height','value':0,'speed':50},function()
+                    ap.menu.filter.is_busy = true;
+                    ap.transform(ap.menu.filter.index[index].subcat,{'property':'height','currentHeight':300,'targetHeight':0,'speed':50},function()
                     {
-                        $(that.menu.filter.index[index].hr).show();
-                        $(that.menu.filter.index[index].subcat).css('margin-top','0px');
-                        $(that.menu.filter.index[index].subcat).css('visibility','hidden');
+                        $(ap.menu.filter.index[index].hr).show();
+                        $(ap.menu.filter.index[index].subcat).css('margin-top','0px');
+                        $(ap.menu.filter.index[index].subcat).css('visibility','hidden');
 
-                        that.menu.filter.index[index] = 0;
-                        that.menu.filter.active.index = 0;
-                        that.menu.filter.active.elem  = null;
-                        that.menu.filter.is_busy = false;
+                        ap.menu.filter.index[index] = 0;
+                        ap.menu.filter.active.index = 0;
+                        ap.menu.filter.active.elem  = null;
+                        ap.menu.filter.is_busy = false;
                     });
                 }
-                else if(that.menu.filter.index[index].state == 0 && that.menu.filter.active.index > 0)
+                else if(ap.menu.filter.index[index].state == 0 && ap.menu.filter.active.index > 0)
                 {
-                    that.menu.filter.is_busy = true;
+                    ap.menu.filter.is_busy = true;
 
-                    let _index = that.menu.filter.active.index;
-                    let _elem = that.menu.filter.active.elem;
+                    let _index = ap.menu.filter.active.index;
+                    let _elem  = ap.menu.filter.active.elem;
 
-                    that.transform(_elem,{'property':'height','value':0,'speed':50},function()
+                    ap.transform(_elem,{'property':'height','currentHeight':300,'targetHeight':0,'speed':50},function()
                     {
-                        $(that.menu.filter.index[_index].hr).show();
-                        $(that.menu.filter.index[_index].subcat).css('margin-top','0px');
-                        $(that.menu.filter.index[_index].subcat).css('visibility','hidden');
+                        $(ap.menu.filter.index[_index].hr).show();
+                        $(ap.menu.filter.index[_index].subcat).css('margin-top','0px');
+                        $(ap.menu.filter.index[_index].subcat).css('visibility','hidden');
 
-                        that.menu.filter.index[that.menu.filter.active.index] = 0;
-                        that.menu.filter.active.index = 70;
-                        that.menu.filter.active.elem  = null;
+                        ap.menu.filter.index[ap.menu.filter.active.index] = 0;
+                        ap.menu.filter.active.index = 70;
+                        ap.menu.filter.active.elem  = null;
 
-                        $(that.menu.filter.index[index].hr).hide();
-                        $(that.menu.filter.index[index].subcat).css('margin-top','20px');
-                        $(that.menu.filter.index[index].subcat).css('visibility','visible');
+                        $(ap.menu.filter.index[index].hr).hide();
+                        $(ap.menu.filter.index[index].subcat).css('margin-top','20px');
+                        $(ap.menu.filter.index[index].subcat).css('visibility','visible');
                         
-                        that.transform(that.menu.filter.index[index].subcat,{'property':'height','value':300,'speed':50},function()
+                        ap.transform(ap.menu.filter.index[index].subcat,{'property':'height','currentHeight':0,'targetHeight':300,'speed':50},function()
                         {
-                            that.menu.filter.index[index].state = 1;
-                            that.menu.filter.active.index = index;
-                            that.menu.filter.active.elem  = that.menu.filter.index[index].subcat;
+                            ap.menu.filter.index[index].state = 1;
+                            ap.menu.filter.active.index = index;
+                            ap.menu.filter.active.elem  = ap.menu.filter.index[index].subcat;
 
-                            that.menu.filter.is_busy = false;
+                            ap.menu.filter.is_busy = false;
                         });
                     });
                 }
@@ -195,20 +210,28 @@ var app = {
 
             case 'category-left':
 
-                if( !that.list_checked_categories[index] || that.list_checked_categories[index]==0 )
+                if( !ap.list_checked_categories[index] || ap.list_checked_categories[index]==0 )
                 {
                     let check = $(event.target).prev('i');
                     $(check).addClass('fa-solid');
                     $(check).addClass('fa-check');
-                    that.list_checked_categories[index] = 1;
+                    ap.list_checked_categories[index] = 1;
                 }
                 else
                 {
                     let check = $(event.target).prev('i');
                     $(check).removeClass('fa-solid fa-check');
-                    that.list_checked_categories[index] = 0;
+                    ap.list_checked_categories[index] = 0;
                 }
 
+            break;
+        
+            case 'article-details':
+                ap.modal('open',type,index);
+            break;
+
+            case 'screen':
+                ap.modal('close');
             break;
         }
 
@@ -216,16 +239,14 @@ var app = {
 
     transform: function(elem,data,callback)
     {
-        let that = this;
+        let ap = this;
 
         switch(data['property'])
         {
             case 'height':
 
-                let currentHeight = $(elem).height();
-                let targetHeight = data['value'];
-
-                console.group(currentHeight,targetHeight);
+                let currentHeight = data['currentHeight'];
+                let targetHeight  = data['targetHeight'];
 
                 if(currentHeight == targetHeight)
                 {
@@ -240,10 +261,13 @@ var app = {
 
                 if(currentHeight < targetHeight)
                 {
-                    $(elem).height(Math.ceil(currentHeight + Math.ceil((targetHeight - currentHeight)/2)));
+                    data['currentHeight'] = Math.ceil(currentHeight + ((targetHeight - currentHeight)/2));
 
-                    window.setTimeout(function(){
-                        that.transform(elem,data,callback);
+                    $(elem).height(data['currentHeight']);
+
+                    window.setTimeout(function()
+                    {
+                        ap.transform(elem,data,callback);
                     },data['speed']);
 
                     return;
@@ -251,11 +275,13 @@ var app = {
 
                 if(currentHeight > targetHeight)
                 {
-                    $(elem).height(Math.floor(currentHeight - ((currentHeight - targetHeight)/2)));
+                    data['currentHeight'] = Math.floor(currentHeight - ((currentHeight - targetHeight)/2)).toFixed(0);
+
+                    $(elem).height(data['currentHeight']);
 
                     window.setTimeout(function()
                     {
-                        that.transform(elem,data,callback);
+                        ap.transform(elem,data,callback);
                     },data['speed']);
 
                     return;
@@ -269,11 +295,11 @@ var app = {
 
     display: function()
     {
-        let that     = this;
+        let ap     = this;
         let executed = false;
-        let dataset  = that.data.articles;
+        let dataset  = ap.data.articles;
 
-        if(that.dataset.length > 0) { dataset = that.dataset; }
+        if(ap.dataset.length > 0) { dataset = ap.dataset; }
 
         let elem = $("article.card")[0];
 
@@ -289,6 +315,7 @@ var app = {
                     let row    = dataset[i];
                     let sample = $(elem).clone(true);
 
+                    let id     = 0;
                     let images = ["images/shop/0.png"];
                     let brand  = "<i>&#8226; not defined &#8226;</i>";
                     let desc   = "<i>&#8226; not defined &#8226;</i>";
@@ -296,9 +323,9 @@ var app = {
                     let price  = "<i>&#8226; not defined &#8226;</i>";
                     let rating = "<i>&#8226; not defined &#8226;</i>";
 
+                    if(row['id'])     { id = row['id']; }
                     if(row['images']) { $('img',sample).attr('src','images/shop/' + row.images[0] + '.png');   }
-
-                    if(row['brand'])  { brand  = that.data.brands[row.brand].name; }
+                    if(row['brand'])  { brand  = ap.data.brands[row.brand].name; }
                     if(row['text'])   { desc   = row['text']; }
 
                     if(row['age'])    
@@ -335,13 +362,21 @@ var app = {
                         } 
                     }
 
+                    $(sample).data('index',id);
+                    $('button',sample).data('index',id);
                     $('.brand',sample).html(brand);
                     $('.desc',sample).html(desc);
                     $('.age',sample).html(age);
                     $('.price',sample).html(price);
                     $('.rating',sample).html(rating);
 
+
                     $(showroom).append(sample);
+
+                    $(sample).on("click",function(event)
+                    {
+                        app.click(event);
+                    });
                 }
             }
 
@@ -353,6 +388,30 @@ var app = {
 
 
  
+    },
+
+    modal: function(action,type,index)
+    {
+        if(action == 'close')
+        {
+            $('#screen').fadeOut(function()
+            {
+                $(this).addClass('closed').removeClass('open')
+            });
+
+            $('#modal').fadeOut(function()
+            {
+                $(this).addClass('closed').removeClass('open')
+            });
+
+            return;
+        }
+
+        if(action == 'open')
+        {
+            $('#screen').removeClass('closed').hide().addClass('open').fadeIn();
+            $('#modal').removeClass('closed').hide().addClass('open').fadeIn();
+        }
     }
 }
 
@@ -373,15 +432,17 @@ $(document).ready(function()
 
     $( "header .search .bar").on("keyup",function(e) 
     {
-        
-
         app.search(this,e);
     });
 
     $("a").on("click",function(event)
     {
-        
+        app.click(event);
+    });
 
+    $("#screen").on("click",function(event)
+    {
         app.click(event);
     });
 });
+

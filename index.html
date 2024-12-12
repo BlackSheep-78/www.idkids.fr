@@ -17,6 +17,9 @@
     </head>
 
     <body>
+        <div id="screen" class="closed" data-type="screen" data-index="0"> </div>
+        <div id="modal" class="open"> </div>
+
         <header class="container">
             <div class="banner">Retours gratuits pendant 60 jours</div>
             <div class="search">
@@ -120,17 +123,20 @@
                 </ul>
             </div>
 
-            <section class="showroom">
-                <article data-id="1" class="card">
-                    <img src="images/shop/0.png" alt="">
-                    <div class="info">
-                        <p class="brand">Brand</p>
-                        <p class="desc">Description</p>
-                        <p class="age">Age</p>
-                        <p class="price">Price</p>
-                        <p class="rating">Rating</p>
-                    </div>
+            <section class="showroom"> 
+                <article data-type="article-details" data-index="0" class="card">
+                        <img src="images/shop/0.png" alt="">
+                        <div class="info">
+                            <p class="brand">Brand</p>
+                            <p class="desc">Description</p>
+                            <p class="age">Age</p>
+                            <p class="price">Price</p>
+                            <p class="rating">Rating</p>
+
+                            <button data-type="article-buy" data-index="0">Ajouter au panier</button>
+                        </div>
                 </article>
+                
                 <article class="card">
 
                 </article>

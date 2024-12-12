@@ -44,6 +44,36 @@ body
     margin:0 auto;
 }
 
+#screen.open
+{
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(100,100,100,0.5);
+    
+}
+
+#screen.open { display: block; }
+#screen.closed { display: none; }
+
+#modal
+{
+    position: fixed;
+    margin: auto;
+    left: 25% ;
+    top: 25%;
+    width: 50%;
+    height: 50%;
+    background-color: white;
+    border: 1px solid grey;
+    border-radius: 10px;
+}
+
+#modal.open { display: block; }
+#modal.closed { display: none; }
+
 
 
 header .banner{
@@ -259,6 +289,8 @@ main .showroom .card{
     flex-wrap: wrap;
     justify-content: center;
     padding: 5px;
+
+    cursor: pointer;
 }
 
 main .showroom .card img{
@@ -282,9 +314,6 @@ main .showroom .card .info .rating{
 
     color:  #D18C3C;
     text-shadow: 2px 2px 4px #888;
-
-
-
 }
 
 
