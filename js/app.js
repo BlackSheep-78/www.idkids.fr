@@ -102,8 +102,6 @@ var app = {
 
         event.preventDefault();
 
-        console.log("click");
-
         let target = event.target;
 
         let type  = $(target).data('type');
@@ -121,7 +119,7 @@ var app = {
         switch(type)
         {
             case 'menu-top':
-                ap.modal('open',type,index);
+                ap.modal('open',"menu ::: top");
             break;
 
             case 'category-top':
@@ -227,7 +225,101 @@ var app = {
             break;
         
             case 'article-details':
-                ap.modal('open',type,index);
+
+                ap.load_template("articles.html",function(html)
+                {
+                    let content = $(html);
+                    let article = ap.article_from_id(index);
+
+                    console.log(article);
+
+                    if(article.images)
+                    {
+                        let thumbnailContainer = $(".thumbnails",content);
+
+                        console.log(thumbnailContainer);
+
+
+                        for(let i = 0; i < article.images.length; i++)
+                        {
+                            let thumbnail = $("<img src='images/shop/" + article.images[i] + ".png'>");
+
+                            $(thumbnail).on("click",function(event)
+                            {
+                                console.log(article.images[i]);
+
+                                $(".picture",content).fadeOut(function()
+                                {
+                                    $(this).css("background-image", "url('images/shop/" + article.images[i] + ".png')").fadeIn();
+
+                                }) 
+                            });
+
+                            $(thumbnailContainer).append(thumbnail);
+                        }
+                    }
+
+                    let image = article.images ? article.images[0] : "0";
+
+                    $(".picture",content).css("background-image", "url('images/shop/" + image + ".png')");
+                    $(".picture",content).css("background-size", "cover"); // Optional, to make the image cover the div
+                    $(".picture",content).css("background-position", "center");
+
+                    let id     = 0;
+                    let brand  = "<i>&#8226; not defined &#8226;</i>";
+                    let desc   = "<i>&#8226; not defined &#8226;</i>";
+                    let age    = "<i>&#8226; not defined &#8226;</i>";
+                    let price  = "<i>&#8226; not defined &#8226;</i>";
+                    let rating = "<i>&#8226; not defined &#8226;</i>";
+
+                    if(article['id'])     { id     = article['id']; }
+                    if(article['brand'])  { brand  = ap.data.brands[article.brand].name; }
+                    if(article['text'])   { desc   = article['text']; }
+
+                    if(article['age'])    
+                    { 
+                        if(article['age'].length == 1)
+                        {
+                            age = "Dès " + article['age'][0] + " ans";
+                        }
+                        else if(article['age'].length == 2)
+                            {
+                                age = "De " + article['age'][0] + " ans à " + article['age'][1] + " ans";
+                            }
+                        
+                    }
+
+                    if(article['price'])  
+                    { 
+                        let arr = (article['price'] + '').split('');
+                        let secondToLastIndex = arr.length - 2;
+                        arr.splice(secondToLastIndex, 0, ',');
+
+                        price  = arr.join('') + " €"; 
+                    }
+
+                    if(article['rating']) 
+                    { 
+                        rating = "";
+
+                        for(let i = 0; i < article['rating']; i++)
+                        {
+                            rating += "<i class='fa-solid fa-star'></i> ";
+                        } 
+                    }
+
+
+                    $('button',content).data('index',id);
+                    $('.brand',content).html(brand);
+                    $('.desc',content).html(desc);
+                    $('.age',content).html(age);
+                    $('.price',content).html(price);
+                    $('.rating',content).html(rating);
+                    
+
+                    ap.modal('open',content);
+                });
+
             break;
 
             case 'screen':
@@ -354,8 +446,6 @@ var app = {
                     { 
                         rating = "";
 
-                        console.log(row['rating']);
-
                         for(let i = 0; i < row['rating']; i++)
                         {
                             rating += "<i class='fa-solid fa-star'></i> ";
@@ -390,7 +480,7 @@ var app = {
  
     },
 
-    modal: function(action,type,index)
+    modal: function(action,content)
     {
         if(action == 'close')
         {
@@ -401,6 +491,7 @@ var app = {
 
             $('#modal').fadeOut(function()
             {
+                $('#modal .content').empty();
                 $(this).addClass('closed').removeClass('open')
             });
 
@@ -410,8 +501,32 @@ var app = {
         if(action == 'open')
         {
             $('#screen').removeClass('closed').hide().addClass('open').fadeIn();
+            $('#modal .content').append(content);
             $('#modal').removeClass('closed').hide().addClass('open').fadeIn();
         }
+    },
+
+    article_from_id: function(id)
+    {
+        let ap = this;
+
+        for(let i = 0; i < ap.data.articles.length; i++ )
+        {
+            if(id == ap.data.articles[i].id)
+            {
+                return ap.data.articles[i];
+            }
+        }
+
+
+    },
+
+    load_template : function(file,callback)
+    {
+        $.get("templates/" + file, function(html) 
+        {
+            callback(html);
+        });
     }
 }
 
@@ -441,6 +556,11 @@ $(document).ready(function()
     });
 
     $("#screen").on("click",function(event)
+    {
+        app.click(event);
+    });
+
+    $(".close-button").on("click",function(event)
     {
         app.click(event);
     });

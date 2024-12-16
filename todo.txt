@@ -1,5 +1,5 @@
-home
+* home
 contact
 mentions legales
-list
-afiche de produits
+* list
+* afiche de produits

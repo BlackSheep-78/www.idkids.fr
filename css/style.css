@@ -74,6 +74,77 @@ body
 #modal.open { display: block; }
 #modal.closed { display: none; }
 
+#modal .innerModel{
+    display: flex;
+    
+    border-radius: 10px;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+}
+
+#modal .topBar{
+    
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: right;
+}
+
+#modal .topBar .close-button
+{
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#modal .content
+{
+    width: 100%;
+    height: 90%;
+}
+
+#modal .article-details{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+#modal .article-details div{
+    margin: 5px;
+}
+
+#modal .article-details .thumbnails{
+    width: 100px;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+#modal .article-details .thumbnails img{
+    width: 95px;
+    height:95px;
+    border: 1px solid grey;
+    border-radius: 10px;
+    margin: 0 auto 5px auto ;
+    cursor: pointer;
+}
+
+#modal .article-details .picture{
+    width: 50%;
+    height: 90%;
+    border-radius: 10px;
+    border: 1px solid grey;
+}
+
+#modal .article-details .data{
+    width: 250px;
+    height: 90%;
+}
+
 
 
 header .banner{
