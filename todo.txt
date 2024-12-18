@@ -3,3 +3,5 @@ contact
 mentions legales
 * list
 * afiche de produits
+
+media query, mobile
