@@ -210,15 +210,16 @@ var app = {
 
                 if( !ap.list_checked_categories[index] || ap.list_checked_categories[index]==0 )
                 {
-                    let check = $(event.target).prev('i');
-                    $(check).addClass('fa-solid');
-                    $(check).addClass('fa-check');
+                    let check = $(event.target).prev('b');
+
+                    $(check).css({'color':'#32CD32'});
+                   
                     ap.list_checked_categories[index] = 1;
                 }
                 else
                 {
-                    let check = $(event.target).prev('i');
-                    $(check).removeClass('fa-solid fa-check');
+                    let check = $(event.target).prev('b');
+                    $(check).css({'color':'white'});
                     ap.list_checked_categories[index] = 0;
                 }
 

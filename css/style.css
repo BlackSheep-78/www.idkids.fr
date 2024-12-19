@@ -326,10 +326,10 @@ main .filter ul li .subcat li{
     padding: 0px;
 }
 
-main .filter ul li .subcat li i{
-    color:green;
+main .filter ul li .subcat li b{
+    color:white;
     font-weight: bold;
-    width: 14px;
+    font-size: 1.3rem;
 }
 
 main .filter ul hr{
