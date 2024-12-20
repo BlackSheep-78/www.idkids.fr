@@ -35,10 +35,13 @@ body
 {
     font-family: var(--font1);
     margin: 0 auto;
+    width: 100%;
 }
 
 .container
 {
+    display: flex;
+    flex-wrap: wrap;
     max-width: 1200px;
     width: 100%;
     margin:0 auto;
@@ -102,8 +105,81 @@ body
 #modal .content
 {
     width: 100%;
-    height: 90%;
+    height: 85%;
+    overflow-y: auto;
 }
+
+/* ***** modal contact ***** */
+
+#modal .contact{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 95%;
+}
+
+#modal .contact .map{
+    width: 48%;
+    height: 100%;
+    border-radius: 10px;
+    border: 1px solid grey;
+    overflow: hidden;
+}
+
+
+#modal .contact iframe{
+    width: 100%;
+    height: 100%;
+}
+
+#modal .contact .contacts{
+    width: 48%;
+    height: 100%;
+}
+
+#modal .contacts .details,
+#modal .contacts .form{
+    margin-left: 10px;
+}
+
+
+
+#modal .contacts .form h1,
+#modal .contacts .details h1{
+    font-size: 1.5rem;
+}
+
+#modal .contacts .form div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+}
+#modal .contacts .form input.text{
+    width: 75%;
+    height: 20px;
+    padding: 5px;
+}
+
+#modal .contacts .form textarea{
+    width: 75%;
+    height: 100px;
+    padding: 5px;
+}
+
+#modal .contacts .form input,
+#modal .contacts .form textarea{
+    outline: none;
+}
+
+#modal input.submit{
+    width: 20%;
+    margin-left: 40% ;
+}
+
+
+/* ***** modal article ***** */
 
 #modal .article-details{
     display: flex;
@@ -157,12 +233,16 @@ header .banner{
     text-transform: uppercase;
     border-radius: 0 0 10px 10px;
     font-family: var(--font1);
+    width: 100%;
 }
 
 header .search{
     display: flex;
-    justify-content: space-between;
+    justify-content:center;
     position: 'relative';
+    width: 100%;
+    flex-wrap: wrap;
+
 }
 
 
@@ -221,17 +301,18 @@ header .search .options ul li a{
 
 header nav{
     margin-top: 45px;
-    width: 81%;
+    width: 100%;
     display: flex;
     justify-content: center;
     flex-direction: column;
     margin-bottom: 10px;
-    margin-left: 220px;
+
     
 }
 
 header nav ul{
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     width: 100%;
 }
@@ -241,6 +322,7 @@ header nav ul li{
     padding: 10px;
     border-radius: 10px 10px 10px 10px;
     cursor: pointer;
+
 }
 
 header nav ul li:hover{
@@ -273,6 +355,10 @@ header nav .options .content{
     display: none;
 }
 
+main{
+    padding-bottom: 20px;
+}
+
 main.container{
     display: flex;
     width: 100%;
@@ -280,8 +366,9 @@ main.container{
 }
 
 main .filter{
-    width: 250px;
-    margin-right: 20px;
+    width: 20%;
+    min-width: 200px;
+    margin-right: 5px;
     background-color: var(--color2);
     border-radius: 10px;
    
@@ -340,21 +427,24 @@ main .filter ul hr{
     padding: 0;
 }
 
+/* ***** showroom ***** */
+
 main .showroom{
-    width: 100%;
+    width: 80%;
     border-radius: 10px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: wrap;
 }
 
 main .showroom .card{
     width: 24%;
-    height: 400px;
+    
     border: 1px solid grey;
     background-color: lightgrey;
     border-radius: 10px;
     margin-bottom: 15px;
+    margin: 0 0px 5px 5px;
 
     display: flex;
     flex-wrap: wrap;
@@ -396,5 +486,60 @@ main .showroom .card .info p{
     overflow: hidden;
     flex-wrap: nowrap;
     text-wrap: nowrap;
+}
+
+footer {
+    margin-top: 50px;
+    background-color: var(--color1);
+    height: 40px;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+footer .ml{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.legal-mentions{
+
+    padding: 10px;
+}
+
+.legal-mentions h1{
+    font-size: 1.5rem;
+}
+
+.legal-mentions h2{
+    font-size: 1rem;
+    margin-top: 20px;
+}
+
+.legal-mentions p{
+    padding: 5px;
+}
+
+@media (min-width: 825px) and (max-width: 1025px) 
+{
+    main .showroom .card{
+        width: 32%;
+    }
+}
+
+@media (min-width: 700px) and (max-width: 825px) 
+{
+    main .showroom .card{
+        width: 49%;
+    }
+}
+
+@media (min-width: 0px) and (max-width: 700px) 
+{
+    main .showroom .card{
+        width: 95%;
+    }
 }
 

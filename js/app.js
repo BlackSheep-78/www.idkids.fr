@@ -119,7 +119,25 @@ var app = {
         switch(type)
         {
             case 'menu-top':
-                ap.modal('open',"menu ::: top");
+
+                if(index == 1)
+                {
+                    ap.load_template("contact.html",function(html){
+                        ap.modal('open',html);
+                    });
+                }
+                else if(index == 2)
+                {
+                    ap.modal('open',"<center>connection</center>");
+                }
+                else if(index == 3)
+                {
+                    ap.modal('open',"<center>favourites</center>");
+                }
+                else if(index == 4)
+                {
+                    ap.modal('open',"<center>cart</center>");
+                }
             break;
 
             case 'category-top':
@@ -325,6 +343,12 @@ var app = {
 
             case 'screen':
                 ap.modal('close');
+            break;
+
+            case 'mention-legal':
+                ap.load_template("legal-mentions.html",function(html){
+                    ap.modal('open',html);
+                });
             break;
         }
 
@@ -552,6 +576,11 @@ $(document).ready(function()
     });
 
     $("a").on("click",function(event)
+    {
+        app.click(event);
+    });
+
+    $("p").on("click",function(event)
     {
         app.click(event);
     });
